@@ -93,37 +93,38 @@ export async function getStaticPaths() {
   const matrix = csv.split('\n').map(row=>row.split(','));
   //const json = matrix.slice(1).map(row=>row.reduce((prev,curr,i)=>{prev[matrix[0][i]]=curr;return prev;},{}))
   const json = matrix.slice(1).map(row=>{return {no:row[0],nama:row[1],asal:row[2]}});
-  return json.map(({no,nama,asal})=>{return {params:{no},props:{nama,asal}}})
-  const pages = [
-    {
-      no: undefined,
-      title: "Astro Store",
-      text: "Welcome to the Astro store!",
-    },
-    {
-      no: "products",
-      title: "Astro products",
-      text: "We have lots of products for you",
-    },
-    {
-      no: "products/astro-handbook",
-      title: "The ultimate Astro handbook",
-      text: "If you want to learn Astro, you must read this book.",
-    },
-  ];
-  return pages.map(({ no, title, text }) => {
-    return {
-      params: { no },
-      props: { title, text },
-    };
-  });
-};
+  return json.map(({no,nama,asal})=>{return {params:{no},props:{no,nama,asal}}})
+}
 
-const {nama,asal}=Astro.props;
+const {no,nama,asal}=Astro.props;
 ---
 <Layout title="Data Induk">
   <main>
-    <div>{nama}</div>
-    <div>{asal}</div>
+      <div>gambar</div>
+      <div>
+        <div><span class="tab">No. Induk</span>{no}</div>
+        <div><span class="tab">Nama</span>{nama}</div>
+        <div><span class="tab">Asal</span>{asal}</div>
+      </div>
   </main>
 </Layout>
+
+<style>
+  main{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+  }
+  main>div{
+    border: 1px solid black;
+  }
+  .tab{
+    display:inline-block;
+    width:5rem;
+  }
+  main>div:nth-child(2)>div{
+    border:1px solid darkgray;
+  }
+</style>
